@@ -1,0 +1,82 @@
+// Export fixtures with PERSON_FIXTURE_DIR while running PersonDetailsTest, then run
+// with Playwright available through NODE_PATH. Uses static test fixtures, never live records.
+const {chromium} = require('playwright');
+const fs = require('node:fs');
+const path = require('node:path');
+const assert = require('node:assert/strict');
+(async () => {
+    const browser = await chromium.launch({channel:'chrome', headless:true});
+    const page = await browser.newPage({viewport:{width:1440,height:1000}});
+    const errors=[]; page.on('pageerror',error=>errors.push(error.message));
+    await page.route('**/*',async route=>{
+        const url = new URL(route.request().url());
+        if (url.hostname !== '127.0.0.1') return route.abort();
+        let file;
+        if (url.pathname==='/disaster' || url.pathname==='/emergency') file=path.join(process.env.PERSON_FIXTURE_DIR,url.pathname.slice(1)+'.html');
+        else file=path.join(process.cwd(),'public',decodeURIComponent(url.pathname));
+        if (!fs.existsSync(file) || !fs.statSync(file).isFile()) return route.fulfill({status:404,body:''});
+        const type={'.html':'text/html','.js':'application/javascript','.css':'text/css','.json':'application/json','.png':'image/png','.svg':'image/svg+xml'}[path.extname(file)] || 'application/octet-stream';
+        return route.fulfill({contentType:type,body:fs.readFileSync(file)});
+    });
+    await page.goto('http://127.0.0.1:8000/disaster');
+    await page.locator('#er-tab-2').click();
+    const card = n=>page.locator('.logbook-person').nth(n);
+    const field=(n,key)=>card(n).locator(`[data-person-field="${key}"]`);
+    await field(0,'first_name').fill('  Juan Miguel  ');
+    await field(0,'last_name').fill('Dela Cruz');
+    await field(0,'age').fill('0');
+    await page.locator('#add-logbook-person').click();
+    await field(1,'first_name').fill('Maria'); await field(1,'last_name').fill('Reyes');
+    await page.locator('#add-logbook-person').click();
+    await field(2,'first_name').fill('Ana'); await field(2,'last_name').fill('Santos');
+    await card(1).locator('[data-remove-person]').click();
+    assert.equal(await field(0,'first_name').inputValue(),'Juan Miguel');
+    assert.equal(await field(1,'first_name').inputValue(),'Ana');
+    assert.deepEqual(await page.locator('.person-num').allTextContents(),['1','2']);
+    const data=await page.locator('#disaster-record-form').evaluate(form=>Object.fromEntries(new FormData(form)));
+    assert.equal(data['persons[0][last_name]'],'Dela Cruz'); assert.equal(data['persons[1][last_name]'],'Santos');
+    const ids=await page.locator('[data-person-field]').evaluateAll(inputs=>inputs.map(input=>input.id));
+    assert.equal(new Set(ids).size,ids.length);
+    await field(1,'first_name').fill('Ana2'); await field(1,'last_name').focus();
+    assert.equal(await field(1,'first_name').getAttribute('aria-invalid'),'true');
+    await page.locator('#er-next').click(); assert.equal(await page.locator('#er-panel-2').isVisible(),true);
+    await field(1,'first_name').fill('Ana'); await field(1,'age').fill('1.5');
+    await page.locator('#er-next').click(); assert.equal(await field(1,'age').getAttribute('aria-invalid'),'true');
+    await field(1,'age').fill('120'); await page.locator('#er-next').click();
+    assert.equal(await page.locator('#er-panel-3').isVisible(),true);
+    await page.locator('#er-tab-2').click();
+    for (const width of [1440,1024,390]) {
+        await page.setViewportSize({width,height:1000});
+        assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,`overflow at ${width}`);
+        const boxes=await card(0).locator('input').evaluateAll(inputs=>inputs.map(input=>({top:input.getBoundingClientRect().top,height:input.getBoundingClientRect().height})));
+        if(width>=1024) { assert.equal(boxes[0].top,boxes[1].top); assert.equal(boxes[1].top,boxes[2].top); assert.equal(boxes[3].top,boxes[4].top); }
+        assert.equal(new Set(boxes.map(box=>box.height)).size,1);
+    }
+    await page.setViewportSize({width:1440,height:1000});
+    await page.locator('.sidebar').hover(); await page.waitForTimeout(400);
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'overflow with expanded sidebar');
+    await card(1).locator('[data-remove-person]').click(); await card(0).locator('[data-remove-person]').click();
+    await page.locator('#er-next').click(); assert.equal(await page.locator('#er-panel-3').isVisible(),true);
+    await page.setViewportSize({width:1440,height:1000});
+    await page.goto('http://127.0.0.1:8000/emergency');
+    await page.locator('#er-tab-2').click();
+    const add=page.locator('[data-add-entry="casualties"][data-category="injured"]');
+    await add.click();
+    await page.locator('#er-save-entry').click(); assert.equal(await page.locator('#entry-first_name').getAttribute('aria-invalid'),'true');
+    await page.locator('#entry-first_name').fill('Juan Miguel'); await page.locator('#entry-middle_name').fill('Santos'); await page.locator('#entry-last_name').fill('Dela Cruz');
+    const emergencyBoxes=await page.locator('#er-entry-fields [data-person-field]').evaluateAll(inputs=>Object.fromEntries(inputs.map(input=>[input.dataset.personField,input.getBoundingClientRect().top])));
+    assert.equal(emergencyBoxes.first_name,emergencyBoxes.middle_name); assert.equal(emergencyBoxes.middle_name,emergencyBoxes.last_name); assert.equal(emergencyBoxes.age,emergencyBoxes.address);
+    await page.locator('#entry-age').fill('0'); await page.locator('#er-save-entry').click();
+    await add.click(); await page.locator('#entry-first_name').fill('Ana'); await page.locator('#entry-last_name').fill('Reyes'); await page.locator('#er-save-entry').click();
+    let entries=JSON.parse(await page.locator('#er-entries').inputValue()); assert.equal(entries.casualties.length,2); assert.equal(entries.casualties[0].name,'Juan Miguel Santos Dela Cruz');
+    const table=page.locator('[data-entry-table="casualties"][data-category="injured"]');
+    await table.getByRole('button',{name:'Edit',exact:true}).first().click();
+    assert.equal(await page.locator('#entry-middle_name').inputValue(),'Santos'); assert.equal(await page.locator('#entry-last_name').inputValue(),'Dela Cruz');
+    await page.locator('#entry-first_name').fill('Juan'); await page.locator('#er-save-entry').click();
+    await page.evaluate(()=>{window.uiConfirm=async()=>true;});
+    await table.getByRole('button',{name:'Remove',exact:true}).last().click();
+    entries=JSON.parse(await page.locator('#er-entries').inputValue()); assert.equal(entries.casualties.length,1); assert.equal(entries.casualties[0].name,'Juan Santos Dela Cruz');
+    assert.deepEqual(errors,[]);
+    console.log('Browser checks passed: add/remove/renumber, per-person errors, Next, optional blank rows, responsive grids, emergency add/edit/remove.');
+    await browser.close();
+})().catch(error=>{console.error(error);process.exit(1);});

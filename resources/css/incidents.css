@@ -1,0 +1,530 @@
+/* ============================================================
+   BARANGAY DOYONG EDRMS — incidents.css
+   Place in: public/css/incidents.css
+   Extends:  public/css/dashboard.css (must be loaded first)
+   ============================================================ */
+
+/* ══════════════════════════════════════════════════════
+   1. TOOLBAR  (filter tabs + search row)
+══════════════════════════════════════════════════════ */
+.incidents-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+/* Filter tab pills */
+.filter-tabs {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 4px;
+    box-shadow: var(--shadow-xs);
+}
+
+.filter-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-500);
+    text-decoration: none;
+    transition: var(--transition);
+    white-space: nowrap;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: var(--font);
+}
+
+.filter-tab:hover {
+    background: var(--gray-100);
+    color: var(--gray-800);
+}
+
+.filter-tab.active {
+    background: var(--primary);
+    color: var(--white);
+    box-shadow: 0 2px 8px rgba(21,128,61,.25);
+}
+
+/* Count bubble inside tabs */
+.tab-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: var(--radius-full);
+    font-size: 10px;
+    font-weight: 700;
+    background: rgba(255,255,255,.25);
+    color: inherit;
+}
+
+.filter-tab:not(.active) .tab-count       { background: var(--gray-100); color: var(--gray-500); }
+.filter-tab:not(.active) .tab-count--danger  { background: var(--danger-light); color: var(--danger); }
+.filter-tab:not(.active) .tab-count--warn    { background: var(--warning-light); color: var(--warning); }
+.filter-tab:not(.active) .tab-count--success { background: var(--success-light); color: var(--success); }
+
+/* Search + filter group */
+.incidents-search-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Search input */
+.inc-search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.inc-search-wrap .material-icons-round {
+    position: absolute;
+    left: 10px;
+    font-size: 18px;
+    color: var(--gray-400);
+    pointer-events: none;
+    transition: color .2s;
+}
+
+.inc-search-input {
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 9px 14px 9px 36px;
+    font-size: 13px;
+    font-family: var(--font);
+    width: 300px;
+    color: var(--gray-700);
+    outline: none;
+    transition: var(--transition);
+    box-shadow: var(--shadow-xs);
+}
+
+.inc-search-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.inc-search-input:focus + .material-icons-round,
+.inc-search-wrap:focus-within .material-icons-round {
+    color: var(--primary);
+}
+
+.inc-search-input::placeholder { color: var(--gray-400); }
+
+/* Type filter dropdown */
+.inc-filter-select {
+    padding: 9px 12px;
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius);
+    font-size: 12px;
+    font-family: var(--font);
+    color: var(--gray-600);
+    outline: none;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-xs);
+}
+
+.inc-filter-select:focus { border-color: var(--primary); }
+
+/* ══════════════════════════════════════════════════════
+   2. TABLE CARD
+══════════════════════════════════════════════════════ */
+.inc-table-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Override data-table for incidents page */
+.inc-table-card .data-table th {
+    padding: 14px 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--gray-400);
+}
+
+.inc-table-card .data-table td {
+    padding: 14px 20px;
+}
+
+.inc-table-card .data-table thead {
+    background: var(--gray-50);
+}
+
+.inc-table-card .data-table .text-center {
+    text-align: center;
+}
+
+/* Location cell */
+.td-location {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--gray-600);
+    font-size: 12px;
+}
+
+/* Type cell */
+.td-type {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-weight: 500;
+}
+
+.type-icon { color: var(--gray-400); }
+
+/* Row hover highlight */
+.inc-row { transition: background .15s; }
+.inc-row:hover { background: #f0fdf4; }
+
+/* ══════════════════════════════════════════════════════
+   3. ACTION BUTTONS IN TABLE
+══════════════════════════════════════════════════════ */
+.inc-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.inc-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--gray-200);
+    background: var(--white);
+    color: var(--gray-500);
+    cursor: pointer;
+    font-family: var(--font);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.inc-action-btn .material-icons-round { font-size: 16px; }
+
+.inc-action-btn:hover {
+    background: var(--primary-light);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.inc-action-btn--danger:hover {
+    background: var(--danger-light);
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+/* ══════════════════════════════════════════════════════
+   4. EMPTY STATE
+══════════════════════════════════════════════════════ */
+.inc-empty-state {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+}
+
+.inc-empty-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--gray-50);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    border: 1px solid var(--gray-100);
+}
+
+.inc-empty-icon .material-symbols-outlined,
+.inc-empty-icon .material-icons-round {
+    font-size: 36px;
+    color: var(--gray-300);
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.inc-empty-state h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gray-700);
+    margin-bottom: 6px;
+}
+
+.inc-empty-state p {
+    font-size: 13px;
+    color: var(--gray-400);
+    max-width: 280px;
+    line-height: 1.5;
+}
+
+/* ══════════════════════════════════════════════════════
+   5. TABLE FOOTER & PAGINATION
+══════════════════════════════════════════════════════ */
+.inc-table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: var(--gray-50);
+    border-top: 1px solid var(--gray-100);
+    flex-shrink: 0;
+}
+
+.inc-count-text {
+    font-size: 11px;
+    color: var(--gray-400);
+}
+
+.inc-count-text strong { color: var(--gray-700); }
+
+.inc-pagination {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pg-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 6px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--gray-200);
+    background: var(--white);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-600);
+    text-decoration: none;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.pg-btn .material-icons-round { font-size: 18px; }
+
+.pg-btn:hover:not(:disabled) {
+    background: var(--primary-light);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.pg-btn--active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--white);
+    box-shadow: 0 2px 8px rgba(21,128,61,.25);
+}
+
+.pg-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ══════════════════════════════════════════════════════
+   6. STATUS UPDATE MODAL
+══════════════════════════════════════════════════════ */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(3px);
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn .2s ease;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-box {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.18);
+    animation: slideUp .25s ease;
+    overflow: hidden;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 22px 16px;
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.modal-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gray-900);
+}
+
+.modal-sub {
+    font-size: 11px;
+    color: var(--gray-400);
+    margin-top: 2px;
+}
+
+.modal-close-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: var(--gray-100);
+    color: var(--gray-500);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.modal-close-btn:hover {
+    background: var(--danger-light);
+    color: var(--danger);
+}
+
+.modal-close-btn .material-icons-round { font-size: 18px; }
+
+.modal-body { padding: 20px 22px; }
+
+.modal-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--gray-400);
+    margin-bottom: 10px;
+}
+
+/* Status radio options */
+.status-options { display: flex; flex-direction: column; gap: 8px; }
+
+.status-option { display: block; cursor: pointer; }
+.status-option input[type="radio"] { display: none; }
+
+.status-option-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-700);
+    transition: var(--transition);
+    background: var(--white);
+}
+
+.status-option-card .material-icons-round { font-size: 18px; color: var(--gray-400); }
+
+.status-option input:checked + .status-option-card {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.status-option input:checked + .status-option-card .material-icons-round {
+    color: var(--primary);
+}
+
+.status-option-card:hover { border-color: var(--primary); }
+
+.modal-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    padding: 10px 14px;
+    background: var(--gray-50);
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    color: var(--gray-500);
+    border: 1px solid var(--gray-100);
+}
+
+.modal-note .material-icons-round { font-size: 15px; color: var(--primary); }
+
+.modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 14px 22px;
+    border-top: 1px solid var(--gray-100);
+    background: var(--gray-50);
+}
+
+/* ══════════════════════════════════════════════════════
+   7. ROW FADE ANIMATION (when filtering)
+══════════════════════════════════════════════════════ */
+.inc-row { animation: fadeInRow .3s ease both; }
+
+@keyframes fadeInRow {
+    from { opacity: 0; transform: translateX(-4px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Hidden row class used by JS filter */
+.inc-row--hidden {
+    display: none !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   8. RESPONSIVE
+══════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+    .incidents-toolbar { flex-direction: column; align-items: stretch; }
+    .incidents-search-group { flex-direction: column; }
+    .inc-search-input { width: 100%; }
+    .filter-tabs { overflow-x: auto; }
+}
+
+@media (max-width: 768px) {
+    .inc-table-card .data-table th:nth-child(4),
+    .inc-table-card .data-table td:nth-child(4) { display: none; } /* hide Reported By */
+    .topbar .btn { display: none; }
+}

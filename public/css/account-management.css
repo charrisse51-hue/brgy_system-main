@@ -1,0 +1,28 @@
+.user-management .main-area { min-height:0; }
+.user-management .topbar { flex-shrink:0; flex-wrap:wrap; }
+body.user-management .topbar [data-open-create] { display:inline-flex!important; }
+.user-management .page-content { min-height:0; overflow-y:auto; }
+.account-stats { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:18px; }
+.account-stat { padding:16px 20px;background:#fff;border:1px solid #e2e8f0;border-radius:12px;border-top:3px solid #15803d; }
+.account-stat p { color:#64748b;font-size:12px;margin-bottom:6px; }.account-stat strong { font-size:24px;color:#166534; }
+.account-table-card { background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden; }
+.account-table-heading { padding:18px 20px;border-bottom:1px solid #e2e8f0; }.account-table-heading h3 { color:#166534;font-size:16px; }.account-table-heading p { color:#64748b;font-size:12px;margin-top:5px; }
+.account-filters { display:flex;flex-wrap:wrap;align-items:end;gap:10px;padding:16px 20px; }.account-search { flex:1;min-width:180px; }
+.account-filters label,.account-form label,.account-reset label { display:flex;flex-direction:column;gap:6px;font-size:12px;color:#334155; }
+.account-filters input,.account-filters select,.account-form input,.account-form select,.account-reset input { padding:10px 12px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:#172b22;min-width:0;width:100%;font:inherit;box-sizing:border-box; }
+.account-table-wrap { min-width:0;container-type:inline-size; }
+body.user-management .account-table { width:100%;min-width:0;table-layout:fixed; }
+body.user-management .account-table :is(th,td) { padding:12px 10px!important;overflow-wrap:anywhere;white-space:normal!important;vertical-align:middle;font-size:12px!important; }
+body.user-management .account-table th { background:#f0fdf4;color:#166534; }
+body.user-management .account-table th:first-child { width:22%; }body.user-management .account-table th:last-child { width:26%; }
+.account-email { display:block;font-size:11px;color:#64748b;margin-top:5px; }
+.account-badge { display:inline-flex;padding:4px 8px;border-radius:20px;font-size:11px;font-weight:700; }.account-badge.active { background:#dcfce7;color:#166534; }.account-badge.inactive { background:#f1f5f9;color:#475569; }
+.account-actions { display:flex;flex-wrap:wrap;gap:6px; }.account-actions form { display:inline-flex; }.account-actions .btn { font-size:11px;padding:6px 8px; }
+.account-pagination { display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;padding:14px 20px;font-size:12px;border-top:1px solid #e2e8f0; }
+.account-empty { text-align:center;padding:28px!important;color:#64748b; }
+.account-dialog { position:fixed;inset:0;margin:auto;width:min(760px,calc(100vw - 24px));max-height:90dvh;border:1px solid #e2e8f0;border-radius:14px;padding:0;overflow-y:auto;background:#fff;color:#172b22; }
+.account-dialog::backdrop { background:rgb(15 23 42 / 45%); }.account-dialog-heading { display:flex;justify-content:space-between;gap:14px;align-items:center;padding:20px 24px;border-bottom:1px solid #e2e8f0; }.account-dialog-heading h2 { font-size:18px;color:#166534; }.account-dialog-heading p { font-size:12px;color:#64748b;margin-top:6px; }
+.account-form-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:20px 24px; }.account-form-footer { display:flex;justify-content:flex-end;gap:10px;padding:16px 24px;border-top:1px solid #e2e8f0; }.account-help { color:#64748b;font-size:12px; }
+.account-errors { background:#fff1f2;color:#9f1239;padding:12px 16px;border-radius:8px;font-size:13px;margin-bottom:16px; }.account-errors ul { margin-left:18px; }
+.account-reset { min-height:100dvh;height:auto;background:#f0fdf4;display:grid;place-items:center;padding:20px;box-sizing:border-box; }.account-reset-card { width:min(440px,100%);padding:28px;background:#fff;border:1px solid #e2e8f0;border-radius:14px;box-sizing:border-box; }.account-reset-card h1 { font-size:22px;color:#166534;margin-bottom:20px; }.account-reset form { display:grid;gap:16px; }.account-reset a { color:#166534;font-size:13px; }.account-reset dl { display:grid;gap:6px;margin-bottom:20px; }.account-reset dt { color:#64748b;font-size:12px; }.account-reset dd { margin-bottom:10px;overflow-wrap:anywhere; }
+@media(max-width:600px) { .account-stats { gap:8px; }.account-stat { padding:12px 8px; }.account-stat p { font-size:10px; }.account-stat strong { font-size:20px; }.account-form-grid { grid-template-columns:minmax(0,1fr);padding:16px; }.account-filters { padding:12px; }.account-filters label { flex:1; }.account-search { flex-basis:100%; } }

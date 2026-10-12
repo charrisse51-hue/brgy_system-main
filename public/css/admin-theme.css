@@ -1,0 +1,234 @@
+/* Shared green and gold theme for the Barangay Doyong administration pages. */
+.admin-theme {
+    --primary: #15803d;
+    --primary-hover: #166534;
+    --primary-light: #f0fdf4;
+    --primary-border: #c8dcba;
+    --brand-dark: #166534;
+    --brand-gold: #d6b648;
+    --gold-soft: #fff8dd;
+    --gold-ink: #786019;
+    --gray-50: #f5f7f1;
+    --gray-100: #edf1e8;
+    --gray-200: #dfe6d8;
+    --gray-300: #c4cfbc;
+    --gray-400: #62715c;
+    --gray-500: #62715c;
+    --gray-600: #4c5e46;
+    --gray-700: #354d31;
+    --gray-800: #243d25;
+    --gray-900: #1c301e;
+    --body-bg: #f5f7f1;
+    --topbar-h: 88px;
+    --shadow-xs: 0 1px 2px rgb(36 75 39 / 4%);
+    --shadow-sm: 0 3px 14px rgb(36 75 39 / 4%);
+    --shadow-md: 0 6px 20px rgb(36 75 39 / 8%);
+    background: var(--body-bg);
+    color: var(--gray-800);
+    font-family: 'Public Sans', sans-serif;
+}
+
+.admin-theme :is(.sidebar, .dashboard-sidebar) {
+    border-color: var(--gray-200);
+    box-shadow: 3px 0 18px rgb(36 75 39 / 3%);
+}
+
+.admin-theme :is(.sidebar-brand, .dashboard-brand) {
+    height: 100px;
+    min-height: 100px;
+    padding: 0 18px;
+    gap: 12px;
+    border-bottom-color: #e4eadf;
+    box-sizing: border-box;
+}
+
+.admin-theme .sidebar-brand-logo {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.admin-theme :is(.sidebar-brand, .dashboard-brand) h1 {
+    color: var(--brand-dark);
+}
+
+.admin-theme :is(.nav-item, .nav-link) {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: var(--gray-600);
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.admin-theme :is(.nav-item, .nav-link):hover {
+    background: #f1f6ed;
+    color: var(--primary);
+}
+
+.admin-theme :is(.nav-item.active, .nav-link.sidebar-item-active) {
+    background: var(--primary-light);
+    border: 1px solid var(--primary-border);
+    color: var(--primary);
+    font-weight: 700;
+    box-shadow: inset 3px 0 var(--primary);
+}
+
+.admin-theme :is(.sidebar-user-card, .dashboard-user) {
+    background: #f1f5eb;
+    border: 1px solid #e0e8d9;
+    border-radius: 12px;
+}
+
+.admin-theme .main-area {
+    min-width: 0;
+}
+
+.admin-theme :is(.topbar, .dashboard-header) {
+    min-height: 88px;
+    gap: 20px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-top: 0;
+    border-bottom-color: var(--gray-200);
+}
+
+.admin-theme .topbar-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-theme .topbar-title > div {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.admin-theme .topbar-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    color: var(--gray-700);
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.admin-theme .topbar-back:hover {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.admin-theme .topbar-back .material-icons-round {
+    font-size: 22px;
+    line-height: 1;
+}
+
+.admin-theme :is(.topbar, .dashboard-header) h2 {
+    color: var(--brand-dark);
+    letter-spacing: -0.025em;
+}
+
+.admin-theme .page-content {
+    background: var(--body-bg);
+}
+
+.admin-theme .btn {
+    border-radius: 9px;
+}
+
+.admin-theme .btn-primary {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 2px 6px rgb(36 75 39 / 12%);
+}
+
+.admin-theme .btn-primary:hover {
+    background: var(--primary-hover);
+    box-shadow: 0 4px 12px rgb(36 75 39 / 18%);
+}
+
+.admin-theme :is(.btn-ghost, .btn-outline) {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    color: var(--gray-700);
+}
+
+.admin-theme :is(.btn-ghost, .btn-outline):hover {
+    background: var(--primary-light);
+    border-color: var(--primary-border);
+    color: var(--primary);
+}
+
+.admin-theme .data-table thead {
+    background: var(--gray-50);
+    border-color: var(--gray-200);
+}
+
+.admin-theme .data-table th {
+    color: var(--gray-600);
+}
+
+.admin-theme .data-table tbody tr:hover {
+    background: #f8faf5;
+}
+
+.admin-theme .data-table .td-id {
+    color: var(--primary);
+}
+
+.admin-theme .modal-box {
+    border: 1px solid var(--gray-200);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgb(28 48 30 / 20%);
+}
+
+.admin-theme .modal-header {
+    background: #f8faf5;
+    border-top: 3px solid var(--brand-gold);
+}
+
+.admin-theme .modal-title {
+    color: var(--brand-dark);
+}
+
+.admin-theme .modal-footer {
+    background: var(--gray-50);
+}
+
+.admin-theme :is(input, textarea, select) {
+    accent-color: var(--primary);
+    --tw-ring-color: var(--primary);
+}
+
+.admin-theme :is(input, textarea, select):focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.admin-theme :is(input[type="checkbox"], input[type="radio"]):checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.admin-theme :is(a, button, input, textarea, select):focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .admin-theme *,
+    .admin-theme *::before,
+    .admin-theme *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}

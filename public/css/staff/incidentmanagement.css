@@ -1,0 +1,33 @@
+/* Staff Incident Management page styles
+   Matches the Staff Dashboard UI (sidebar, cards, tables, modal)
+*/
+
+/* Sidebar and nav are shared with staff dashboard. Add only page-specific overrides here. */
+
+/* Modal styles */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: 50;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 60;
+    padding: 1.5rem;
+}
+
+.modal-card {
+    width: 100%;
+    max-width: 680px;
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 15px 40px rgba(15,23,42,0.18);
+    overflow: hidden;
+}

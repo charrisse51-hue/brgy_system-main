@@ -1,0 +1,46 @@
+/* Reference layout, limited to the disaster records listing. */
+.disaster-records {
+    --primary: #15803d;
+    --primary-hover: #166534;
+    --primary-light: #f0fdf4;
+    --brand-dark: #152b43;
+    --gray-50: #f6f7f8;
+    --gray-100: #eff4f9;
+    --gray-200: #dbe5ef;
+    --gray-400: #94a3b8;
+    --gray-500: #8295ae;
+    --gray-600: #475569;
+    --gray-700: #40566e;
+    --gray-800: #152b43;
+    --body-bg: #f6f7f8;
+}
+.disaster-records .sidebar { box-shadow: none; }
+.disaster-records .nav-item { padding: 11px 12px; border-radius: 8px; font-size: 14px; }
+.disaster-records .nav-item.active { border: 1px solid transparent; border-right: 4px solid var(--primary); box-shadow: none; }
+.disaster-records .sidebar-user-card { background: #f7fafc; border: none; padding: 10px; }
+.disaster-records .user-avatar { width: 32px; height: 32px; }
+.disaster-records .topbar { border-top: none; }
+.disaster-records .topbar h2 { font-size: 18px; }
+.disaster-records .topbar p { font-size: 10px; }
+.disaster-records .topbar .btn { display: inline-flex; padding: 10px 14px; border-radius: 7px; box-shadow: none; font-size: 13px; }
+.disaster-records .page-content { padding: 28px; }
+.disaster-records .inc-table-card { border: 1px solid #dbe5ef; border-radius: 11px; box-shadow: 0 1px 3px rgb(15 23 42 / 10%); }
+.disaster-records .table-wrap { flex: none; overflow-x: auto; }
+.disaster-records .data-table { min-width: 1150px; }
+.disaster-records .inc-table-card .data-table th { padding: 16px 20px; white-space: nowrap; color: #94a3b8; font-size: 11px; }
+.disaster-records .inc-table-card .data-table td { height: 64px; font-size: 11px; white-space: nowrap; }
+.disaster-records .inc-table-card .data-table th:nth-child(4),
+.disaster-records .inc-table-card .data-table td:nth-child(4) { display: table-cell; }
+.disaster-records .data-table .td-id { color: #40566e; }
+.disaster-records .inc-table-footer { margin-top: 0; background: #f6f7f8; }
+.disaster-records .pg-btn--active { background: #15803d; border-color: #15803d; }
+.staff-disaster-records .data-table { min-width: 1050px; }
+.staff-disaster-records .inc-table-card .data-table td { white-space: normal; min-width: 100px; line-height: 1.6; }
+.staff-disaster-records .inc-table-card .data-table td:nth-child(3),
+.staff-disaster-records .inc-table-card .data-table td:nth-child(6) { min-width: 160px; overflow-wrap: anywhere; }
+@media (max-width: 767px) {
+    .disaster-records .page-content { padding: 16px; }
+    .disaster-records .topbar { padding: 8px 16px; gap: 12px; height: auto; min-height: 64px; }
+    .disaster-records .topbar h2 { font-size: 16px; }
+    .disaster-records .topbar .btn { white-space: nowrap; padding: 9px; }
+}

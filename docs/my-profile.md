@@ -1,0 +1,15 @@
+# My Profile and password changes
+
+Administrators and staff open My Profile from the existing sidebar account section. The single dropdown contains My Profile and the CSRF-protected Log Out action. Change Password remains inside My Profile. The existing automatic sidebar remains in use.
+
+The profile reads the authenticated account only. Users may edit their name components and contact number. Username, email, role, account status, and report authorization are not writable through these endpoints. Legacy full names remain unchanged unless valid separate first and last names are supplied. The avatar uses the account's initial; no image upload or additional database column was introduced. Resident portal users retain the previous account view and cannot use the personnel update endpoints.
+
+Password changes require the current password, a different new password of at least 12 characters, and matching confirmation. Spaces and special characters are accepted. Whitespace-only and common passwords are rejected. Laravel's uncompromised password rule checks known breaches using the Pwned Passwords hash-prefix service: the password itself is never sent. This external check depends on connectivity; Laravel's built-in verifier permits validation to continue when that service is unavailable. The local required, length, common-password, confirmation, and current-password checks still apply.
+
+Requests use authentication, CSRF protection, and separate rate limits: five password changes/attempts per minute per account, and ten profile updates. The target is always derived from the server-side authenticated session. Updates and their audit entries run in database transactions. Password changes use Laravel hashing and the existing AccountSessions revoker, rotating remembered-login tokens, removing database sessions, and incrementing the session version. Only the current session is regenerated with the new version. Old sessions stay invalid even when another session store is used. Password fields are never returned as old input or included in audit entries.
+
+Activity Logs records Profile Updated and Password Changed with the account, time, and successful result. Its timestamp display uses Asia/Manila. The staff role retains its existing restriction against administering historical logs.
+
+No schema migration or password reset is required to deploy this feature. Direct password changes do not require email delivery. Existing email reset functionality remains available subject to its mail configuration.
+
+Validation: 156 tests passed (1,513 assertions), production assets built successfully, and browser checks passed for both roles at 1440px, 768px, and 390px. Tests cover successful updates, incorrect current passwords, required fields, short/common/breached/unchanged passwords, confirmation mismatch, hash storage, old/new login behavior, current/other session handling, database session removal, permissions, audit entries, and rate limiting. UI checks cover the account dropdown, responsive layout, eye toggles, and inline validation.
